@@ -3,8 +3,20 @@ import { getPrismicClient } from "../../services/prismic";
 import styles from "./styles.module.scss";
 import Prismic from '@prismicio/client'
 import { GetStaticProps } from "next";
+import { RichText } from 'prismic-dom'
 
-export default function Posts() {
+type Post = {
+  slug: string;
+  title: string;
+  excerpt: string;
+  updatedAt: string;
+}
+
+interface PostProps{
+  posts: Post[]
+}
+
+export default function Posts({posts}: PostProps) {
   return (
     <>
       <Head>
@@ -12,54 +24,17 @@ export default function Posts() {
       </Head>
       <main className={styles.container}>
         <div className={styles.posts}>
-          <a href="">
-            <time>12 de março de 2021</time>
+          {posts.map(post => (
+          <a key={post.slug} href="#">
+            <time>{post.updatedAt}</time>
             <strong>
-              Visões inovadoras do código livre e do open source no
-              desenvolvimento da internet
+              {post.title}
             </strong>
             <p>
-              Linux, React, Angular.js, Mozilla, Apache, HTTP, Docker e
-              Kubernetes. Softwares distintos, desenvolvidos por pessoas
-              diferentes, empresas diferentes, propósitos diferentes e que, às
-              vezes, disputam um espaço no imenso mercado da tecnologia. Todos
-              com um traço em comum: são fontes de código aberto, open source,
-              disponíveis para a colaboração e desenvolvimento de toda
-              comunidade.
+              {post.excerpt}
             </p>
-          </a>
-          <a href="">
-            <time>12 de março de 2021</time>
-            <strong>
-              Visões inovadoras do código livre e do open source no
-              desenvolvimento da internet
-            </strong>
-            <p>
-              Linux, React, Angular.js, Mozilla, Apache, HTTP, Docker e
-              Kubernetes. Softwares distintos, desenvolvidos por pessoas
-              diferentes, empresas diferentes, propósitos diferentes e que, às
-              vezes, disputam um espaço no imenso mercado da tecnologia. Todos
-              com um traço em comum: são fontes de código aberto, open source,
-              disponíveis para a colaboração e desenvolvimento de toda
-              comunidade.
-            </p>
-          </a>
-          <a href="">
-            <time>12 de março de 2021</time>
-            <strong>
-              Visões inovadoras do código livre e do open source no
-              desenvolvimento da internet
-            </strong>
-            <p>
-              Linux, React, Angular.js, Mozilla, Apache, HTTP, Docker e
-              Kubernetes. Softwares distintos, desenvolvidos por pessoas
-              diferentes, empresas diferentes, propósitos diferentes e que, às
-              vezes, disputam um espaço no imenso mercado da tecnologia. Todos
-              com um traço em comum: são fontes de código aberto, open source,
-              disponíveis para a colaboração e desenvolvimento de toda
-              comunidade.
-            </p>
-          </a>
+          </a> 
+          ))}
         </div>
       </main>
     </>
@@ -70,13 +45,25 @@ export const getStaticProps: GetStaticProps = async () => {
   const prismic = getPrismicClient()
 
   const response = await prismic.query([
-    Prismic.predicates.at('document.type', 'post')
+    Prismic.predicates.at('document.type', 'publication')
   ],{
     fetch: ['publication.title', 'publication.content'], //quais dados buscar do prismic
     pageSize: 100,
   })
 
-  console.log(JSON.stringify(response,null, 2))
+  // const posts = response.results.map(post => {
+  //   return{
+  //     slug: post.uid,
+  //     title: RichText.asText(post.data.title),
+  //     excerpt: post.data.content.find(content => content.type === 'paragraph') ?.text ?? '',
+  //     updatedAt: new Date(post.last_publication_date).toLocaleDateString('pt-BR',{
+  //       day: '2-digit',
+  //       month: 'long',
+  //       year: 'numeric'
+  //     }
+  //     )
+  //   }
+  // })
 
   return{ 
     props: {}
