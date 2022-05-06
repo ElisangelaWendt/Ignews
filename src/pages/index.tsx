@@ -19,7 +19,7 @@ export default function Home({product}: HomeProps) {
         o que for colocado dentro dele, será anexado
         ao arquivo _document.tsx.
         como por exemplo nesse caso, quando essa página for 
-        renderiada, o título dela será anexado ao arquivo
+        renderizada, o título dela será anexado ao arquivo
         _document.
         dessa maneira o título não fica igual quando é acessado
         outra página, cada página tem seu próprio título */}
