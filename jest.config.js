@@ -12,4 +12,9 @@ module.exports = {
   },
 
   testEnvironment: "jsdom",
+
+  //para transformar arquivos CSS
+  moduleNameMapper:{
+    "\\.(scss|css|sass)$": "identity-obj-proxy"
+  }
 }
