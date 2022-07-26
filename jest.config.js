@@ -16,5 +16,15 @@ module.exports = {
   //para transformar arquivos CSS
   moduleNameMapper:{
     "\\.(scss|css|sass)$": "identity-obj-proxy"
-  }
+  },
+  //para coletar o relatório
+  collectCoverage: true,
+  // de quais lugares serão coletados os relatórios
+  collectCoverageFrom: [
+    "src/**/*.tsx",
+    "!src/**/*.spec.tsx",//excluindo os arquivos que terminam com .spec.tsx
+    "!src/**/_app.tsx",//excluindo os arquivos que terminam com .spec.tsx
+    "!src/**/_document.tsx",//excluindo os arquivos que terminam com .spec.tsx
+  ],
+  coverageReporters: ["lcov", "json"]
 }

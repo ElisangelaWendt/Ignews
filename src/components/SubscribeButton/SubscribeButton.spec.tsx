@@ -7,7 +7,11 @@ import {useRouter} from 'next/router'
 
 jest.mock('next-auth/react')
 
-jest.mock('next/router')
+jest.mock('next/router', () => ({
+  useRouter: jest.fn().mockReturnValue({
+    push: jest.fn(),
+  }),
+}))
 
 describe('SubscribeButton', () => {
 it('renders correctly', () => {
@@ -54,7 +58,7 @@ it('redirects to posts when user already has a subscription', () => {
   );
   //quando essa função for chamado, o retorno dela deve ser 
   useRouterMocked.mockReturnValueOnce({
-    push: jest.fn()
+    push: pushMocked
   } as any)
 
   render(<SubscribeButton/>)
@@ -63,7 +67,7 @@ it('redirects to posts when user already has a subscription', () => {
 
   fireEvent.click(subscribeButton)
 
-  expect(pushMocked).toHaveBeenCalled()
+  expect(pushMocked).toHaveBeenCalledWith('/posts')
 
 })
 });
