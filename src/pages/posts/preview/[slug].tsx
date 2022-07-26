@@ -25,7 +25,7 @@ export default function PostPreview({post}: PostPreviewProps){
       router.push(`/posts/${post.slug}`)
     }
 
-  }, [session])//array de dependencias
+  }, [post.slug, router, session])//array de dependencias
 
   return(
     <>

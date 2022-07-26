@@ -11,6 +11,7 @@ test('it renders correctly', async () => {
   await waitFor(() => { //outra maneira
     return expect(screen.getByText('Button')).toBeInTheDocument()
   })
+  // screen.logTestingPlaygroundURL()//função para abrir uma URL que ajuda a mostrar quais elementos daquela tela podem ser testados
 
   // await waitFor(() => { 
   //   return expect(screen.getByText('Button')).not.toBeInTheDocument() //para verificar se o botão NÃO está na tela
